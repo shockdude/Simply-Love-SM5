@@ -43,7 +43,9 @@ Branch.AfterScreenSelectColor = function()
 	local preferred_style = ThemePrefs.Get("AutoStyle")
 	if preferred_style ~= "none" then
 		-- If "versus" ensure that both players are actually considered joined.
-		if preferred_style == "versus" then
+		if #GAMESTATE:GetEnabledPlayers() == 2 then
+			preferred_style = "versus"
+		elseif preferred_style == "versus" then
 			GAMESTATE:JoinPlayer(PLAYER_1)
 			GAMESTATE:JoinPlayer(PLAYER_2)
 		end
