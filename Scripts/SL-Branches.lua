@@ -79,6 +79,10 @@ Branch.AfterScreenSelectColor = function()
 	-- it's too confusing for machine operators, novice players, and developers alike
 	and GAMESTATE:GetCoinMode() ~= "CoinMode_Pay" then
 
+		-- If "single" but 2 players joined then just do "versus"
+		if #GAMESTATE:GetEnabledPlayers() == 2 then
+			preferred_style = "versus"
+		end
 		-- If "versus" ensure that both players are actually considered joined.
 		if preferred_style == "versus" then
 			GAMESTATE:JoinPlayer(PLAYER_1)
@@ -88,8 +92,8 @@ Branch.AfterScreenSelectColor = function()
 		-- (for whatever reason), we're in a bit of a pickle, as there is
 		-- no way to read the player's mind and know which side they really
 		-- want to play on. Unjoin PLAYER_2 for lack of a better solution.
-		elseif preferred_style == "single" and GAMESTATE:GetNumSidesJoined() == 2 then
-			GAMESTATE:UnjoinPlayer(PLAYER_2)
+		-- elseif preferred_style == "single" and GAMESTATE:GetNumSidesJoined() == 2 then
+			-- GAMESTATE:UnjoinPlayer(PLAYER_2)
 		end
 
 		-- FIXME: there's probably a more sensible place to set the current style for

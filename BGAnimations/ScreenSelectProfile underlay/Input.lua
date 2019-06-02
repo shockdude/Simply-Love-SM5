@@ -27,6 +27,7 @@ local AutoStyle = ThemePrefs.Get("AutoStyle")
 local mpn = GAMESTATE:GetMasterPlayerNumber()
 
 local Handle = {}
+local started = false
 
 Handle.Start = function(event)
 	local topscreen = SCREENMAN:GetTopScreen()
@@ -70,7 +71,10 @@ Handle.Start = function(event)
 
 		finished = true
 		-- otherwise, play the StartButton sound
-		MESSAGEMAN:Broadcast("StartButton")
+		if not started then
+			MESSAGEMAN:Broadcast("StartButton")
+		end
+		started = true
 		-- and queue the OffCommand for the entire screen
 		topscreen:queuecommand("Off"):sleep(0.4)
 	end
@@ -132,7 +136,7 @@ end
 local InputHandler = function(event)
 	if finished then return false end
 	if not event or not event.button then return false end
-	if (AutoStyle=="single" or AutoStyle=="double") and event.PlayerNumber ~= mpn then return false	end
+	if (AutoStyle=="double") and event.PlayerNumber ~= mpn then return false	end
 
 	if event.type ~= "InputEventType_Release" then
 		if Handle[event.GameButton] then Handle[event.GameButton](event) end

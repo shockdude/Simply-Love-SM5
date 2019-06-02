@@ -174,7 +174,7 @@ local t = Def.ActorFrame {
 
 	CodeMessageCommand=function(self, params)
 
-		if (AutoStyle=="single" or AutoStyle=="double") and params.PlayerNumber ~= mpn then return end
+		if (AutoStyle=="double") and params.PlayerNumber ~= mpn then return end
 
 		-- Don't allow players to unjoin from SelectProfile in CoinMode_Pay.
 		-- 1 credit has already been deducted from ScreenTitleJoin, so allowing players
@@ -212,7 +212,7 @@ local t = Def.ActorFrame {
 			return
 		end
 
-		if AutoStyle=="none" or AutoStyle=="versus" then
+		if AutoStyle=="none" or AutoStyle=="single" or AutoStyle=="versus" then
 			HandleStateChange(self, PLAYER_1)
 			HandleStateChange(self, PLAYER_2)
 		else
